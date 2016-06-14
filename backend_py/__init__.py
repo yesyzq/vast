@@ -21,10 +21,12 @@ class HazHandler(tornado.web.RequestHandler):
         word_doc = haz_data.find()
         all_data = []
         if word_doc:
-            for item in word_doc:
-                del item["_id"]
-                all_data.append(item)
-            self.write(json.dumps(all_data))
+			type(word_doc)
+            #for item in word_doc:
+				#self.write(item)
+                #del item["_id"]
+                #all_data.append(item)
+            #self.write(json.dumps(all_data))
         else:
             self.set_status(404)
             self.write({"error": "word not found"})
