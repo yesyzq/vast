@@ -1,1 +1,0 @@
-run on Anaconda 4.0.0 (64-bit)
