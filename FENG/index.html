@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="uft-8" />
+	<title>UROP testing</title>
+
+
+	<script src="d3/d3.min.js" charset="utf-8"></script>
+
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.2.min.js"></script>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+
+	<div id="demo" style="margin: 10px;height:500px">
+		<img src="F2.jpg" style="width:756px; z-index: -1;position: absolute;opacity: 0.5"></img>
+	</div>
+
+	<div id="infoBox">
+		<p>Information</p>
+	</div>
+
+	<script type="text/javascript">
+// data from JSON file
+var data;
+// scale up for map
+var scale = 4;
+
+function loadJSON(callback) {   
+
+	var xobj = new XMLHttpRequest();
+	xobj.overrideMimeType("application/json");
+	xobj.open('GET', 'mobile.json', true); 
+	xobj.onreadystatechange = function () {
+		if (xobj.readyState == 4 && xobj.status == "200") {
+			callback(xobj.responseText);
+		}
+	};
+	xobj.send(null);  
+}
+
+var checkTable = [];
+function getRandomColor() {
+	var letters = '0123456789ABCDEF'.split('');
+	var color = '#';
+	for (var i = 0; i < 6; i++ ) {
+		color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+}
+
+var decideColor = function(proxCard){
+	for (var i = 0; i < checkTable.length; i++ ){
+		if (checkTable[i].proxCard == proxCard){
+			return checkTable[i].color;
+		}
+	}
+	var newColor = getRandomColor();
+	checkTable.push({proxCard:proxCard, color:newColor});
+	return newColor;
+}
+
+// Data Filter
+var lowerBound = 32400.0;
+// feedback needed data
+var dataSlice = function(data){
+	var timeInterval = function(value){
+		return (value.message.floor == "2")
+		&& (value.offset >= lowerBound)
+		&& (value.offset < lowerBound + 60.0);
+	}
+	return data.filter(timeInterval);
+}
+
+// Coordinates functions
+var getX = function(d) { return (d.message.X * scale); };
+var getY = function(d) { return (111 - d.message.Y) * scale; };
+
+// refreshGraph helper function
+var refreshGraph = function(svg) {
+	var circle = svg.selectAll("circle").data([]);
+
+	circle.exit().remove();
+	removeInfo();	
+
+	circle.data(dataSlice(data)).enter()
+	.append("circle")
+	.attr("id",function(d) {return d.message.proxCard})
+	.attr("r", 5)
+	.attr("fill", function(d) {return decideColor(d.message.proxCard)})
+	.attr("cx", function(d) { return getX(d) })
+	.attr("cy", function(d) { return getY(d) })
+	.attr("onmouseover", function(d) {return "showInfo(\"" + d.message.proxCard+"\")";})
+	.attr("onmouseleave", "removeInfo()");
+	
+	lowerBound += 60.0;
+}
+
+function init() {
+	loadJSON(function(response) {
+		data = JSON.parse(response);
+
+		console.log("init complete");
+
+// Date
+// var format = d3.time.format("%Y-%m-%d %H:%M:%S");
+// var dateFn = function(d) { return format.parse(d.message.datetime) }
+
+// Generate SVG ground
+var svg = d3.select("#demo").append("svg:svg")
+.attr("width", 400)
+.attr("height", 400);
+
+
+
+refreshGraph(svg);
+
+// recursive to refresh the graph
+var timeout = function(){
+	refreshGraph(svg);
+// end of recursion
+if (lowerBound > 1176960.0) 
+	return;
+setTimeout(timeout, 1500);
+}
+
+timeout();
+});
+}
+
+var showInfo = function(proxCard) {
+	var para = document.createElement('p');
+	var node = document.createTextNode(proxCard);
+	para.className = "temp";
+	para.appendChild(node);
+
+	document.getElementById('infoBox').appendChild(para);
+}
+var removeInfo = function() {
+	var para = document.getElementsByClassName("temp");
+	if (para != undefined){
+		for (var i = 0; i < para.length; i++)
+			document.getElementById('infoBox').removeChild(para[i]);
+	}
+}
+
+init();
+
+</script>
+
+</body>
+</html>
