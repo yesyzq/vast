@@ -3,8 +3,11 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 from tornado import gen
-import pymongo, logging, json
-
+import logging
+import pymongo
+import json
+from bson import json_util
+from collections import deque
 from tornado.options import define, options
 define("port", default=8000, help="run on the given port", type=int)
 
@@ -19,15 +22,16 @@ class HazHandler(tornado.web.RequestHandler):
     def get(self):
         haz_data = self.application.db.haz_data
         word_doc = haz_data.find()
-        all_data = []
-        if word_doc:
-            for item in word_doc:
-                del item["_id"]
-                all_data.append(item)
-            self.write(json.dumps(all_data))
-        else:
-            self.set_status(404)
-            self.write({"error": "word not found"})
+        all_data = deque()
+        for item in word_doc:
+            item["_id"] = ""
+            all_data.append(item)
+        self.write(json.dumps(list(all_data)))
+
+        # self.write(json.dumps(list(all_data)))
+        # self.write(dumps(haz_data.find()))
+        # json_docs = [doc for doc in word_doc]
+        # self.write(json.dumps(json_docs, default=json_util.default))
 
 def main():
     tornado.options.parse_command_line()
