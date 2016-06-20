@@ -1,0 +1,30 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel=stylesheet href="view.css">
+    <script src="jquery-ui-1.11.4.custom/external/jquery/jquery.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
+    <link rel=stylesheet href="jQRangeSlider-5.7.2/css/iThing-min.css">
+    <script src="jQRangeSlider-5.7.2/jQAllRangeSliders-min.js"></script>
+    <script src="jQRangeSlider-5.7.2/jQAllRangeSliders-withRuler-min.js"></script>
+    <script src="time-filter.js"></script>
+</head>     
+<body>
+    <div id="init" width="1500" height="1200" style="position: absolute">
+        <canvas id="view" width="1200" height="900"></canvas>
+         <div class="event">
+            <h2>Event</h2>
+            <p>Department: <select class="department"></select></p> <!--Selection-->
+            <p>Time: <span class="slider-time"></span> - <span class="slider-time2"></span></p>
+            <div id="slider"></div>
+            <p>Day: <span id="day"></span></p>
+            <div id="day_slider"></div>
+            <p>Staff: <select class="staff"></select></p> <!--Selection-->
+        </div>
+    </div>
+    
+</body>
+<script src="init.js"></script>
+</html>
