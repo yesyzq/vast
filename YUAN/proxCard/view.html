@@ -1,5 +1,6 @@
 <!DOCTYPE>
 <html>
+
 <head>
     <meta charset="utf-8">
     <link rel=stylesheet href="view.css">
@@ -10,21 +11,29 @@
     <script src="jQRangeSlider-5.7.2/jQAllRangeSliders-min.js"></script>
     <script src="jQRangeSlider-5.7.2/jQAllRangeSliders-withRuler-min.js"></script>
     <script src="time-filter.js"></script>
-</head>     
+</head>
+
 <body>
     <div id="init" width="1500" height="1200" style="position: absolute">
         <canvas id="view" width="1200" height="900"></canvas>
-         <div class="event">
+        <div class="event">
             <h2>Event</h2>
-            <p>Department: <select class="department"></select></p> <!--Selection-->
+            <p>Department:
+                <select id="department"></select>
+                <!--Selection-->
+            </p>
             <p>Time: <span class="slider-time"></span> - <span class="slider-time2"></span></p>
             <div id="slider"></div>
             <p>Day: <span id="day"></span></p>
             <div id="day_slider"></div>
-            <p>Staff: <select class="staff"></select></p> <!--Selection-->
+            <p>Staff:
+                <select id="staff"></select>
+                <!--Selection-->
+            </p>
         </div>
     </div>
-    
+
 </body>
 <script src="init.js"></script>
+
 </html>
