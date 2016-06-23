@@ -19,16 +19,20 @@
         <div class="event">
             <h2>Event</h2>
             <p>Department:
-                <select id="department"></select>
-                <!--Selection-->
+                <form>
+                    <select id="department" onchange="refreshRoute()"></select>
+                    <!--Selection-->
+                </form>
             </p>
             <p>Time: <span class="slider-time"></span> - <span class="slider-time2"></span></p>
             <div id="slider"></div>
             <p>Day: <span id="day"></span></p>
             <div id="day_slider"></div>
             <p>Staff:
-                <select id="staff"></select>
-                <!--Selection-->
+                <form>
+                    <select id="staff" onchange="refreshRoute()"></select>
+                    <!--Selection-->
+                </form>
             </p>
         </div>
     </div>
