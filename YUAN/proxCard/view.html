@@ -4,8 +4,10 @@
 <head>
     <meta charset="utf-8">
     <link rel=stylesheet href="view.css">
+    <link rel=stylesheet href="link.css">
     <script src="jquery-ui-1.11.4.custom/external/jquery/jquery.min.js"></script>
-    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
     <script src="jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
     <link rel=stylesheet href="jQRangeSlider-5.7.2/css/iThing-min.css">
     <script src="jQRangeSlider-5.7.2/jQAllRangeSliders-min.js"></script>
@@ -19,24 +21,19 @@
         <div class="event">
             <h2>Event</h2>
             <p>Department:
-                <form>
-                    <select id="department" onchange="refreshRoute()"></select>
-                    <!--Selection-->
-                </form>
+                <select id="department" change="refreshdp()"></select>
+                <!--Selection-->
             </p>
             <p>Time: <span class="slider-time"></span> - <span class="slider-time2"></span></p>
             <div id="slider"></div>
             <p>Day: <span id="day"></span></p>
             <div id="day_slider"></div>
             <p>Staff:
-                <form>
-                    <select id="staff" onchange="refreshRoute()"></select>
-                    <!--Selection-->
-                </form>
+                <select id="staff" change="refreshstaff()"></select>
+                <!--Selection-->
             </p>
         </div>
     </div>
-
 </body>
 <script src="init.js"></script>
 
