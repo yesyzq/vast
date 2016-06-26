@@ -33,7 +33,7 @@ $(document).ready(function () {
             }
             $('#department').append(de_html);
         }
-        
+
         // refresh to get the specified staff
         function get_staff(data, dp_id) {
             var staff_array = [],
@@ -56,7 +56,7 @@ $(document).ready(function () {
             }
             $('#staff').append(staff_html);
         }
-        
+
         // convert the floor-zone to x-y
         function MatrixCal(tempR) {
             var positionTable = {
@@ -156,22 +156,7 @@ $(document).ready(function () {
             }
             return result;
         }
-        
-        // draw a route for a user
-        function draw_route(data, dp_id, staff_id) {
-            var temp = [];
-            for (var i = 0; i <= data.length - 1; i++) {
-                if ((data[i].Department === dp_id) && (data[i].card_nanme === staff_id)) {
-                    for (var j = 0; j < data[i].route.length; j++) {
-                        temp.push(data[i].route[j]);
-                    }
-                }
-            }
-
-            var location = MatrixCal(temp);
-            console.log(location);
-        }
-        
+    
         // select_route
         function select_route(data, dp_id, staff_id) {
             if ((dp_id === "All") && (staff_id === "All")) {
@@ -194,6 +179,52 @@ $(document).ready(function () {
             } else if ((dp_id !== "All") && (staff_id !== "All")) {
                 draw_route(data, dp_id, staff_id);
             }
+        }
+        // draw a route for a user
+        function draw_route(data, dp_id, staff_id) {
+            d3.select("svg").remove;
+            var temp = [];
+            for (var i = 0; i <= data.length - 1; i++) {
+                if ((data[i].Department === dp_id) && (data[i].card_nanme === staff_id)) {
+                    for (var j = 0; j < data[i].route.length; j++) {
+                        temp.push(data[i].route[j]);
+                    }
+                }
+            }
+
+            var location = MatrixCal(temp);
+            console.log(location);
+            var width = 1200,
+                height = 900,
+                len = location.length;
+            var svg = d3.select("body").append("svg")
+                .attr("width", width)
+                .attr("height", height);
+            var defs = svg.append("defs");
+            var arrowMarket = defs.append("marker")
+                .attr("id", "arrow")
+                .attr("markerUnits", "strokeWidth")
+                .attr("markerWidth", "12")
+                .attr("markerHeight", "12")
+                .attr("viewBox", "0 0 1200 900")
+                .attr("refX", "600")
+                .attr("refY", "450")
+                .attr("orient", "auto");
+            var path = 'M' + (location[0].x) + " " + (location[0].y);
+            for (var k = 1; k <= len - 1   ; k++) {
+                path += " T" + (location[k]).x + " " + (location[k].y);
+            }
+            console.log(path);
+            arrowMarket.append("path")
+                .attr("d", path)
+                .attr("fill", "#0ff");
+            var curve = svg.append("path")
+                .attr("d", path)
+                .attr("fill", "white")
+                .attr("stroke", "red")
+                .attr("stroke-width", 2)
+                .attr("marker-end", "url(#arrow)");
+
         }
 
         var day = 1;
