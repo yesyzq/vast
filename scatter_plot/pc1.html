@@ -1,0 +1,82 @@
+<!doctype html>
+<head>
+    <meta charset="UTF-8">
+    <title>Parallel Coordinates</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/d3.parcoords.css">
+
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="js/d3.parcoords.js"></script>
+    <script src="js/divgrid.js"></script>
+    <script src="js/jquery.min.js"></script>
+</head>
+<body>
+<div class="column-nav">
+    <a class="sensor_name" id="sensor_name1" onclick="toggle_nav()">Sensor <img src="icon-dropdown.png" style="color: #FFFFFF; width:15px; height: 15px;margin-right: 10px;"></a>
+    <a class="sensor_name" id='nav_toggle' style="display: none; opacity: 0.8;padding-top: 15px;">sensor1: F_1_Z_4 VAV REHEAT Damper Position<br>sensor2: F_1_Z_2 REHEAT COIL Power<br>sensor3: F_1_Z_7: Thermostat Cooling Setpoint<br>sensor4: F_1_Z_2: Equipment Power<br>sensor5: F_1_Z_1: Lights Power<br>sensor6: F_1_Z_5 RETURN OUTLET CO2 Concentration<br>sensor7: F_1_Z_8A: Thermostat Temp<br>sensor8: F_1_Z_4 SUPPLY INLET Mass Flow Rate<br>sensor9: F_1_VAV_SYS AIR LOOP INLET Mass Flow Rate<br></a>
+</div>
+<div class="column">
+<div class="index" style="height:500px;">
+    <div id="example" class="parcoords" style="width:1100px;height:300px;"></div>
+    <script id="brushing">
+        console.log('enter1');
+        floor=$(this).text();
+        $.getJSON('pc_dict.json',function(data){
+            var F1=[];
+            for(key in data){
+                if(key == 'F1'){
+                    for(key2 in data[key]){
+                        for(var i=0;i<336;i++){
+                            var temp=data[key][key2][i];
+                            var id='F'+key2[2]+'Z'+key2[6];
+                            F1.push({'id':id, 'sensor1': temp[0], 'sensor2':temp[1].toFixed(2),
+                                'sensor3':temp[2].toFixed(2),'sensor4':temp[3].toFixed(2),
+                                'sensor5':temp[4].toFixed(2), 'sensor6':temp[5].toFixed(2),
+                                'sensor7':temp[6].toFixed(2), 'sensor8':temp[7].toFixed(2),
+                                'sensor9':temp[8].toFixed(2),'prox':temp[9].toFixed(2)});
+                        }
+                    }
+                }
+            }
+
+            var dt=F1;
+
+            var colors = d3.scale.category20();
+
+            var parcoords = d3.parcoords()("#example")
+                    .data(dt)
+                    .color(function (d) {
+                        return colors(parseInt(dt.indexOf(d)/336));
+                    })
+                    .render()
+                    .brushMode("1D-axes")
+                    .attr("opacity",0.5)
+                    .attr("stroke-width","1px")
+                    .createAxes();
+
+        });
+
+        $('.tick')
+    </script>
+</div>
+</div>
+
+<script>
+    var count=1;
+    function toggle_nav(){
+        if(count==0){
+            $('#nav_toggle').toggle('slow');
+            count=1;
+        }
+        else{
+            $('#nav_toggle').toggle('slow');
+            count=0;
+        }
+    }
+</script>
+</body>
+</html>
+
+
+
+
