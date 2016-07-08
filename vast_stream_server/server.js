@@ -3,6 +3,7 @@ var connect = require('connect'), express = require('express'), port = (process.
 var Client = require("./client");
 var jsonfile = require('jsonfile')
 var file = 'stream.json'
+var fs = require('fs');
 // Setup Express
 var server = express.createServer();
 server.configure(function() {
@@ -79,14 +80,18 @@ server.get('/stream', function(req, res) {
       });
     } else {
       // data message
-      jsonfile.writeFile(file, message, function (err) {
-        console.error(err)
-      })
+//      jsonfile.writeFile(file, JSON.stringify(message), function (err) {
+//        console.error(err)
+//      });
+        var jsonMessage = JSON.stringify(message);
+        jsonMessage.replace("}{","},{");
+        fs.appendFile(file,"{[",function(err){console.log(err);});
+        fs.appendFile(file,jsonMessage,function(err){console.log(err);});
+        fs.appendFile(file,"]},",function(err){console.log(err);});
       res.write(JSON.stringify(message));
       console.log(message);
     }
   });
-
 });
 
 // A Route for Creating a 500 Error (Useful to keep around)

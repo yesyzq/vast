@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>haz</title>
+    <script src="js\echarts.js"></script>
+	<script src="js\jquery.js"></script>
+	<script src="js\timeseries.js"></script>
+	<script src="js\bootstrap.min.js"></script>
+	<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<link href="css\bootstrap.min.css" rel="stylesheet">
+	<link href="css\timeseries.css" rel="stylesheet">
+	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.1.0/lodash.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+</head>
+<body>
+<div class="row" id="linechart" style="width: 100%; height:500px;">
+</div>
+<div class="timeseries"style="width: 100%;">
+</div>
+<script src="js\dark.js"></script>
+<script>
+$(document).ready(function() {
+			var f1z8a =[];
+			var f2z2 = [];
+			var f2z4 = [];
+			var f3z1 = [];
+			var dateTime = [];
+
+    console.log(f1z8a);
+    var lineHaz = echarts.init(document.getElementById('linechart'),theme);
+    var option = {
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['f1z8a','f2z2','f2z4','f3z1']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            boundaryGap : false,
+            data : dateTime
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+            type:'line',
+            data:f1z8a
+        },
+        {
+            type:'line',
+            data:f2z2
+        },
+        {
+            type:'line',
+            data:f2z4
+        },
+        {
+            type:'line',
+            data:f3z1
+        }
+    ]
+};
+    lineHaz.setOption(option);
+	$.getJSON('building_json/haz_day.json').done(function(data){
+	var flz8a =[];
+	var f2z2 = [];
+	var f2z4 = [];
+	var f3z1 = [];
+	var dateTime = [];
+	for(var i=0;i<data.length;i++){
+		flz8a.push(data[i].flz8a);
+		f2z2.push(data[i].f2z2);
+		f2z4.push(data[i].f2z4);
+		f3z1.push(data[i].f3z1);
+		dateTime.push(data[i].day);
+	}
+	var currentSeries=[4];
+	currentSeries[0]={
+		name:'flz8a',
+		type:'line',
+		data:flz8a
+	};
+	currentSeries[1]={
+		name:'f2z2',
+		type:'line',
+		data:f2z2
+	};
+	currentSeries[2]={
+		name:'f2z4',
+		type:'line',
+		data:f2z4
+	}
+	currentSeries[3]={
+		name:'f3z1',
+		type:'line',
+		data:f3z1
+	};
+	lineHaz.setOption(
+			{
+				xAxis: {
+					data: dateTime
+				},
+				yAxis: {
+					type: 'value'
+				},
+				series: currentSeries
+			}
+	);
+});
+});
+</script>
+<script>
+        window.onload = function() {
+          var data = [{'value': 1380854103662},{'value': 1363641921283}];
+          var brushEnabled = true;
+          timeseries('timeseries', data, true);
+		  timeseries.getBrushExtent();
+        }
+</script>
+</body>
+</html>

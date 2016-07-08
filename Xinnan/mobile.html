@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="uft-8" />
+	<title>Mobile Prox Data</title>
+	<script src="js\echarts.js"></script>
+	<script src="js\jquery.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script src="js\bootstrap.min.js"></script>
+	<link href="css\bootstrap.min.css" rel="stylesheet">
+
+
+	<link rel="stylesheet" href="css/iThing.css" type="text/css" />
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script src="js/jquery.mousewheel.min.js"></script>
+	<script src="js/jQAllRangeSliders-min.js"></script>
+	<script src="js/jQRangeSlider-withRuler-min.js"></script>
+</head>
+<body>
+<nav style="background:#3C3C3C" class="navbar navbar-fixed-top navbar-inverse">
+	<div class="container" style="background:#3C3C3C;width: 80%;">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">Vast Challenge 2016</a>
+		</div>
+		<div id="navbar" class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-role="button" aria-haspopup="true" aria-expand="false">Prox-out<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="index.html">Prox-out</a></li>
+						<li><a href="test.html">Prox_out route</a></li>
+					</ul>
+				</li>
+				<li><a href="mobile.html">prox-mobile</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-role="button" aria-haspopup="true" aria-expand="false">Building<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="building_power.html">Building Power</a></li>
+						<li><a href="Temperature.html">Building Temperature</a></li>
+						<li><a href="Massflow.html">Building Air Flow</a></li>
+						<li><a href="haha.html">Harmful Gas</a></li>
+					</ul>
+				</li>
+				<li><a href="heater.html">Water Heater</a></li>
+			</ul>
+		</div><!-- /.nav-collapse -->
+	</div><!-- /.container -->
+</nav><!-- /.navbar -->
+<div style="position:relative;top:70px;">
+<div class="container" style="width: 90%;">
+	<div class="col-md-12" id="slider"></div>
+	<div class="col-md-12" id="day_slider" style="position:relative; height: 50px;"></div>
+</div>
+	<div id="ctlPlusInfo" class="row" style="position: relative;left:40px; top: 15px;">
+		<div class="container" style="width: 90%;">
+		<div class="col-md-4">
+			<button id="start" class="btn btn-default" onclick="startAnimation()">Start</button>
+			<button id="pause" class="btn btn-default" onclick="pauseAnimation()">Pause</button>
+			<button id="clear" class="btn btn-default" >Clear</button>
+			<button id="rodbtn" class="btn btn-default" >time selector</button>
+		</div>
+		<div class="col-md-8" id="rod" style="height: 20px; background-color: white"></div>
+		</div>
+	</div>
+	<div class="container" style="width: 90%;">
+	<h3 id="date" style="font-family:cursive; margin: 5px;font-size: 22px;position: relative;top:15px;left: 50px;">Date</h3>
+	</div>
+<div>
+	<div id="F1M" style="margin: 20px; width:756px">
+		<img id="mapImage" src="pic/F1.jpg" style="width:756px; height:444px; z-index: -1;position: absolute;opacity: 0.5">
+        <img id="Image" src="pic/F2.jpg" style="width:756px; height:444px;z-index: -1;position: absolute;opacity: 0.5; left:776px;">
+        <img id="map" src="pic/F3.jpg" style="width:756px; z-index: -1;position: absolute;opacity: 0.5; left:776px;top:685px;">
+	</div>
+</div>
+</div>
+	<script src="js/mobile.js"></script>
+</body>
+</html>

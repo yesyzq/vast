@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Building</title>
+    <script src="js\echarts.js"></script>
+    <script src="js\jquery.js"></script>
+    <script src="js\timeseries.js"></script>
+    <script src="js\bootstrap.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link href="css\bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav style="background:#3C3C3C" class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container" style="background:#3C3C3C;width: 80%;">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Vast Challenge 2016</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-role="button" aria-haspopup="true" aria-expand="false">Prox-out<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html">Prox-out</a></li>
+                        <li><a href="test.html">Prox_out route</a></li>
+                    </ul>
+                </li>
+                <li><a href="mobile.html">prox-mobile</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-role="button" aria-haspopup="true" aria-expand="false">Building<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="building_power.html">Building Power</a></li>
+                        <li><a href="Temperature.html">Building Temperature</a></li>
+                        <li><a href="Massflow.html">Building Air Flow</a></li>
+                        <li><a href="haha.html">Harmful Gas</a></li>
+                    </ul>
+                </li>
+                <li><a href="heater.html">Water Heater</a></li>
+            </ul>
+        </div><!-- /.nav-collapse -->
+    </div><!-- /.container -->
+</nav><!-- /.navbar -->
+<div class="container" style="width: 90%;position:relative;top:100px;">
+    <button class="btn btn-default" id="temp">Indoor Temperature</button>
+    <button class="btn btn-default" id="sethigh">Set heat point</button>
+    <button class="btn btn-default" id="setlow">Set cool point</button>
+    <button class="btn btn-default" id="hvac">HVAC inlet outlet</button>
+    <button class="btn btn-default" id="hvac_zone">HVAC inlet outlet by zone</button>
+    <a href="http://ihome.ust.hk/~hfengac/urop/echarts.html" target="_blank"><button class="btn btn-info" >点击转到冯昊安的综合版</button></a>
+    <button class="btn btn-success" id="black" >Black background</button>
+    <button class="btn btn-success" id="white">White background</button>
+    <h2 style="text-align: center;">Floor 1 Temperature</h2>
+    <div class="row" id="F1temp" style="width: 100%; height:500px;"></div>
+    <h2 style="text-align: center;">Floor 2 Temperature</h2>
+    <div class="row" id="F2temp" style="width: 100%; height:500px;"></div>
+    <h2 style="text-align: center;">Floor 3 Temperature</h2>
+    <div class="row" id="F3temp" style="width: 100%; height:500px;"></div>
+</div>
+<script>
+    alert("indoor temperature是各个区的室内温度，heat set point是热气设定温度，cool point是冷气设定温度， inlet outlet是整一层的进入HVAC温度和空调出风口温度");
+</script>
+<script src="js/shine.js"></script>
+<script src="js/building_temp.js"></script>
+</body>
+</html>
