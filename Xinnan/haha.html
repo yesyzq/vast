@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<header>
+    <meta charset="utf-8">
+    <nav style="background:#3C3C3C" class="navbar navbar-fixed-top navbar-inverse">
+        <div class="container" style="background:#3C3C3C;width: 80%;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Vast Challenge 2016</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-role="button" aria-haspopup="true" aria-expand="false">Prox-out<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html">Prox-out</a></li>
+                            <li><a href="test.html">Prox_out route</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="mobile.html">prox-mobile</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-role="button" aria-haspopup="true" aria-expand="false">Building<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="building_power.html">Building Power</a></li>
+                            <li><a href="Temperature.html">Building Temperature</a></li>
+                            <li><a href="Massflow.html">Building Air Flow</a></li>
+                            <li><a href="haha.html">Harmful Gas</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="heater.html">Water Heater</a></li>
+                </ul>
+            </div><!-- /.nav-collapse -->
+        </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+    <div class="container" style="width: 90%;position: relative;top: 100px;;">
+        <button class="btn btn-default" id="co2">CO2</button>
+        <button class="btn btn-default" id="haz">Haz</button>
+        <h2 style="text-align: center;">Floor1 CO2 & Haz</h2>
+        <div div class="row" id="F1CO2" style="width: 100%; height:500px;"></div>
+        <h2 style="text-align: center;">Floor2 CO2 & Haz</h2>
+        <div div class="row" id="F2CO2" style="width: 100%; height:500px;"></div>
+        <h2 style="text-align: center;">Floor3 CO2 & Haz</h2>
+        <div div class="row" id="F3CO2" style="width: 100%; height:500px;"></div>
+    </div>
+
+    <link href="css\bootstrap.min.css" rel="stylesheet">
+
+    <script src="js/echarts.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var floor1 = ['1', '2','3', '4','5','7','8A', '8B'],
+                    floor2 = [ '1','2','3','4','5','6', '7','8','9','10','11','12A','12B','12C','14','15','16'],
+                    floor3 = [ '1','2','3','5','6','7', '8', '9','10','11A', '11B','11C'];
+            var getOption = function(x_axis,series,legend) {
+                var option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        position: function (pt) {
+                            return [pt[0], '10%'];
+                        }
+                    },
+                    legend: {
+                        data:legend
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        },
+                        y:'bottom'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: x_axis
+                    },
+                    yAxis: [
+                        {
+                        type: 'value'
+                //boundaryGap: [0, '100%']
+                        }
+                    ],
+                    dataZoom: [{
+                        type: 'inside',
+                        start: 0,
+                        end: 100
+                    }, {
+                        start: 0,
+                        end: 100
+                    }],
+                    series:series
+                };
+                return option;
+            };
+
+            $.getJSON('building_json/hvac_processed2.json',function(data){
+                $.getJSON('building_json/haz_processed.json',function(data_haz) {
+                    var drawco2 = function(id,floor, floorArray){
+                        var chart = echarts.init(document.getElementById(id),building_theme);
+                        var series = [];
+                        var names = [];
+                        for(var zone of floorArray){
+                            var name = "F_"+floor+"_Z_" + zone+" RETURN OUTLET CO2 Concentration";
+                            names.push(name);
+                            var tempObj = {
+                                name: name,
+                                type: 'line',
+                                data: data[name]
+                            };
+                            series.push(tempObj);
+                        }
+                        chart.setOption(getOption(x_axis,series,names));
+                    };
+                    var x_axis = data["Date/Time"];
+                    var drawF1CO2 = function () {
+                        var F1CO2 = echarts.init(document.getElementById('F1CO2'), building_theme);
+                        var F1CO2Series = [];
+                        var names = [];
+                        var name=" F_1_Z_8A: Hazium Concentration";
+                        names.push(name);
+                        var tempObj = {
+                            name: name,
+                            type: 'line',
+                            data: data_haz[name]
+                        };
+                        F1CO2Series.push(tempObj);
+                        //console.log(data_haz[name]);
+                        //var series = [F1CO2Series,F1HazSeries];
+                        F1CO2.setOption(getOption(x_axis, F1CO2Series, names));
+                    };
+
+                    var drawF2CO2 = function () {
+                        var F2CO2 = echarts.init(document.getElementById('F2CO2'), building_theme);
+                        var F2CO2Series = [];
+                        var names = [];
+						for(let i=0;i<names.length;i++){
+							names[i]=names[i].slice(0,8)+names[i].slice(-17)
+						}
+                        var haz_name=[" F_1_Z_8A: Hazium Concentration"," F_2_Z_2: Hazium Concentration", " F_2_Z_4: Hazium Concentration"," F_3_Z_1: Hazium Concentration"];
+                        for (var i=0;i<4;i++){
+                            names.push(haz_name[i]);
+                            var tempObj = {
+                                name: haz_name[i],
+                                type: 'line',
+                                data: data_haz[haz_name[i]]
+                            };
+                            F2CO2Series.push(tempObj);
+                        }
+                        F2CO2.setOption(getOption(x_axis, F2CO2Series, names));
+                    };
+                    var drawF3CO2 = function () {
+                        var F3CO2 = echarts.init(document.getElementById('F3CO2'), building_theme);
+                        var F3CO2Series = [];
+                        var names = [];
+
+                        var name=" F_3_Z_1: Hazium Concentration";
+                        names.push(name);
+                        var tempObj = {
+                            name: name,
+                            type: 'line',
+                            data: data_haz[name]
+                        };
+                        F3CO2Series.push(tempObj);
+
+                        //var series = [F1CO2Series,F1HazSeries];
+                        F3CO2.setOption(getOption(x_axis, F3CO2Series, names));
+                    };
+
+                    drawco2("F1CO2",1,floor1);
+                    drawco2("F2CO2",2,floor2);
+                    drawco2("F3CO2",3,floor3);
+                    $("#co2").click(function(){
+                        drawco2("F1CO2",1,floor1);
+                        drawco2("F2CO2",2,floor2);
+                        drawco2("F3CO2",3,floor3);
+                    });
+                    $("#haz").click(function(){
+                        drawF1CO2();
+                        drawF2CO2();
+                        drawF3CO2();
+                    });
+                });
+            });
+        });
+    </script>
+    <script src="js/shine.js"></script>
+</header>
+</html>

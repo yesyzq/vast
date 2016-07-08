@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Building</title>
+    <script src="js\echarts.js"></script>
+    <script src="js\jquery.js"></script>
+    <script src="js\timeseries.js"></script>
+    <script src="js\bootstrap.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <link href="css\bootstrap.min.css" rel="stylesheet">
+    <style>
+    </style>
+</head>
+<body>
+<nav style="background:#3C3C3C" class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container" style="background:#3C3C3C;width: 80%;">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Vast Challenge 2016</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-role="button" aria-haspopup="true" aria-expand="false">Prox-out<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html">Prox-out</a></li>
+                        <li><a href="test.html">Prox_out route</a></li>
+                    </ul>
+                </li>
+                <li><a href="mobile.html">prox-mobile</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-role="button" aria-haspopup="true" aria-expand="false">Building<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="building_power.html">Building Power</a></li>
+                        <li><a href="Temperature.html">Building Temperature</a></li>
+                        <li><a href="Massflow.html">Building Air Flow</a></li>
+                        <li><a href="haha.html">Harmful Gas</a></li>
+                    </ul>
+                </li>
+                <li><a href="heater.html">Water Heater</a></li>
+            </ul>
+        </div><!-- /.nav-collapse -->
+    </div><!-- /.container -->
+</nav><!-- /.navbar -->
+<div class="container" style="width: 90%;position:relative;top:100px;">
+    <button class="btn btn-default" id="floor1">floor1</button>
+    <button class="btn btn-default" id="floor2">floor2</button>
+    <button class="btn btn-default" id="floor3">floor3</button>
+    <button class="btn btn-success" id="black" >Black background</button>
+    <button class="btn btn-success" id="white">White background</button>
+    <h2 style="text-align: center;">Mass Flow</h2>
+    <div class="row" id="massflow" style="width: 100%; height:500px;"></div>
+    <h2 style="text-align: center;" id="floortitle">Floor Mass Flow</h2>
+    <div class="row" id="F1massflow" style="width: 100%; height:500px;"></div>
+    <h2 style="text-align: center;" id="outdoor">Outdoor air</h2>
+    <button class="btn btn-default" id="outflow">Outdoor mass flow rate</button>
+    <button class="btn btn-default" id="outrate">Outdoor mass fraction</button>
+    <div class="row" id="outair" style="width: 100%; height:500px;"></div>
+    <h2 style="text-align: center;" id="dampertitle">Floor Damper Position</h2>
+    <div class="row" id="damper" style="width: 100%; height:500px;"></div>
+</div>
+<script>
+    alert("outdoor mass flow那两个按钮针对倒数第二个图，第一个是室外气体流入HVAC的量，第二个是进入HVAC气体中室外气体占比，其他可以参照Dataformat.pdf");
+</script>
+<script src="js/shine.js" id="theme"></script>
+<script src="js/building_mass.js"></script>
+</body>
+</html>

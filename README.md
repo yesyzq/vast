@@ -29,3 +29,17 @@ node get_data.js
 Visit 127.0.0.1:1337/haz_data/start-time/end-time  
 ```  
 start time and end time are in second counting from 0:00 May-31, it will return data form start to end
+
+### How to start the stream server:
+#### make sure you have node installed
+
+##### start: go to the node_server folder
+```
+npm install
+node server.js
+```
+##### usage:
+```
+Visit localhost:8081/stream
+```  
+Current issue: json file seems not correct, please use http interface for now.
