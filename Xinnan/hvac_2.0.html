@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chord</title>
+    <script src="js\echarts.js"></script>
+    <script src="js\jquery.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="js\bootstrap.min.js"></script>
+	<link href="css\bootstrap.min.css" rel="stylesheet">
+
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+</head>
+<body>
+<nav style="background:#3C3C3C" class="navbar navbar-fixed-top navbar-inverse">
+    <div class="container" style="background:#3C3C3C;width: 80%;">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Vast Challenge 2016</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-role="button" aria-haspopup="true" aria-expand="false">Prox-out<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html">Prox-out</a></li>
+                        <li><a href="test.html">Prox_out route</a></li>
+                    </ul>
+                </li>
+                <li><a href="mobile.html">prox-mobile</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-role="button" aria-haspopup="true" aria-expand="false">Building<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="building_power.html">Building Power</a></li>
+                        <li><a href="Temperature.html">Building Temperature</a></li>
+                        <li><a href="Massflow.html">Building Air Flow</a></li>
+                        <li><a href="haha.html">Harmful Gas</a></li>
+                    </ul>
+                </li>
+                <li><a href="heater.html">Water Heater</a></li>
+            </ul>
+        </div><!-- /.nav-collapse -->
+    </div><!-- /.container -->
+</nav><!-- /.navbar -->
+<div style="height: 50px;"></div>
+<div class="container" style="position:relative; top:20px;width: 90%;">
+    <div class="row">
+        <div class="panel panel-default col-md-4" style="height:650px;">
+        <div class="panel-heading"><h4>HVAC Filter</h4></div>
+        <div class="panel-body">
+            <div id="filter" class="col-md-12" >
+                <!--<div class="checkbox" id="floor">-->
+                    <!--<b>Floor: </b><label><input type="checkbox" id="f1" value=""> Floor 1 </label> <label><input type="checkbox" id="f2" value=""> Floor 2 </label> <label><input type="checkbox" id="f3" value=""> Floor 3 </label>-->
+                <!--</div><br>-->
+                <div class="checkbox" id="floor1_zone">
+                    <b>Floor 1 Zone: </b><label><input type="checkbox" value="1"> 1 </label> <label><input type="checkbox" value="2"> 2 </label> <label><input type="checkbox" value="3"> 3 </label> <label><input type="checkbox" value="4"> 4 </label>
+                      <label><input type="checkbox" value="5"> 5 </label> <label><input type="checkbox" value="6"> 6 </label> <label><input type="checkbox" value="7"> 7 </label> <label><input type="checkbox" value="8A"> 8A </label> <label><input type="checkbox" value="8B"> 8B </label>
+                </div>
+                <div class="checkbox" id="floor2_zone">
+                    <b>Floor 2 Zone: </b> <label><input type="checkbox" value="1"> 1 </label> <label><input type="checkbox" value="2"> 2 </label> <label><input type="checkbox" value="3"> 3 </label> <label><input type="checkbox" value="4"> 4 </label>
+                    <label><input type="checkbox" value="5"> 5 </label> <label><input type="checkbox" value="6"> 6 </label> <label><input type="checkbox" value="7"> 7 </label> <label><input type="checkbox" value="8"> 8 </label> <label><input type="checkbox" value="9"> 9 </label>
+                    <label><input type="checkbox" value="10"> 10 </label> <label><input type="checkbox" value="11"> 11 </label> <label><input type="checkbox" value="12A"> 12A </label> <label><input type="checkbox" value="12B"> 12B </label> <label><input type="checkbox" value="12C"> 12C </label>
+                    <label><input type="checkbox" value="14"> 14 </label> <label><input type="checkbox" value="15"> 15 </label> <label><input type="checkbox" value="16"> 16 </label>
+                </div>
+                <div class="checkbox" id="floor3_zone">
+                    <b>Floor 3 Zone: </b> <label><input type="checkbox" value="1"> 1 </label> <label><input type="checkbox" value="2"> 2 </label> <label><input type="checkbox" value="3"> 3 </label>
+                    <label><input type="checkbox" value="5"> 5 </label> <label><input type="checkbox" value="6"> 6 </label> <label><input type="checkbox" value="7"> 7 </label> <label><input type="checkbox" value="8"> 8 </label> <label><input type="checkbox" value="9"> 9 </label>
+                    <label><input type="checkbox" value="10"> 10 </label> <label><input type="checkbox" value="11A"> 11A </label> <label><input type="checkbox" value="11B"> 11B </label> <label><input type="checkbox" value="11C"> 11C </label>
+                </div><br>
+
+                <div id="building">
+                    <div class="checkbox">
+                    <b>Building Power: </b><label><input type="checkbox" value=": Equipment Power">Equipment Power</label> <label><input type="checkbox" value="_VAV_SYS COOLING COIL Power">Cooling Coil Power</label> <label><input type="checkbox" value="_VAV_SYS HEATING COIL Power">Heating Coil Power</label> <label><input type="checkbox" value=" REHEAT COIL Power">Reheat Coil Power</label>
+                </div><br>
+                    <div class="checkbox">
+                    <b>Building Temperature: </b><label><input type="checkbox" value=": Thermostat Temp"> Thermostat Temp </label> <label><input type="checkbox" value=": Thermostat Heating Setpoint"> Thermostat Heating Setpoint </label>  <label><input type="checkbox" value=": Thermostat Cooling Setpoint"> Thermostat Cooling Setpoint </label> <label><input type="checkbox" value=" SUPPLY INLET Temperature"> Supply Inlet Temperature </label>  <label><input type="checkbox" value="_VAV_SYS SUPPLY FAN OUTLET Temperature"> Supply Fan Outlet Temperature </label>
+                </div><br>
+                    <div class="checkbox">
+                    <b>Building Airflow: </b><label><input type="checkbox" value="_VAV_SYS SUPPLY FAN OUTLET Mass Flow Rate"> Supply Fan Outlet Mass Flow Rate</label> <label><input type="checkbox" value=" SUPPLY INLET Mass Flow Rate"> Supply Inlet Mass Flow Rate</label> <label><input type="checkbox" value="_VAV_SYS Outdoor Air Mass Flow Rate"> Outdoor Air Mass Flow Rate</label> <label><input type="checkbox" value=" VAV REHEAT Damper Position"> Reheat Damper Position</label>
+                </div><br>
+                    <div class="checkbox">
+                    <b>Harmful Gas: </b><label><input type="checkbox" value=" RETURN OUTLET CO2 Concentration"> CO2 </label> <label><input type="checkbox" value="haz"> Haz </label>
+                </div><br>
+                    </div>
+                <button type="button" class="btn btn-default" onclick="drawHVAC()">Plot</button>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="panel panel-default col-md-8" style="height:700px;">
+        <div class="panel-heading"><h4>Building Data</h4></div>
+        <div class="panel-body">
+            <div id="hvac" class="col-md-12" style="width: 100%; height:550px;">
+            </div>
+         </div>
+    </div>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+    function drawHVAC(){
+        //get the checked zone
+        var checked_zone=[];
+        $('#floor1_zone input:checked').each(function(){
+            checked_zone.push("F_1_Z_"+$(this).val());
+        });
+        $('#floor2_zone input:checked').each(function(){
+            checked_zone.push("F_2_Z_"+$(this).val());
+        });
+        $('#floor3_zone input:checked').each(function(){
+            checked_zone.push("F_3_Z_"+$(this).val());
+        });
+        console.log(checked_zone);
+
+        //get the sensor
+        var sensor=[];
+        $('#building input:checked').each(function(){
+            sensor.push($(this).val());
+        });
+        console.log(sensor);
+
+
+        var getOption = function(x_axis,series,legend) {
+            var option = {
+                tooltip: {
+                    trigger: 'axis',
+                    position: function (pt) {
+                        return [pt[0], '10%'];
+                    }
+                },
+                legend: {
+                    data:legend
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    },
+                    y:'bottom'
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: x_axis
+                },
+                yAxis: {
+                    type: 'value'
+                    //boundaryGap: [0, '100%']
+                    //max: 100
+                },
+                dataZoom: [
+                    {
+                        type: 'slider',
+                        show: true,
+                        xAxisIndex: [0],
+                        start: 0,
+                        end: 100
+                    },
+                    {
+                        type: 'slider',
+                        show: true,
+                        yAxisIndex: [0],
+                        start: 0,
+                        end: 100
+                    },
+                    {
+                        type: 'inside',
+                        xAxisIndex: [0],
+                        start: 0,
+                        end: 100
+                    },
+                    {
+                        type: 'inside',
+                        yAxisIndex: [0],
+                        start: 0,
+                        end: 100
+                    }
+                ],
+                series:series
+            };
+            return option;
+        };
+
+        $.getJSON('building_json/hvac_processed2.json',function(data){
+            $.getJSON('building_json/haz_processed.json',function(data2){
+                var x_axis = data["Date/Time"];
+                var HVAC = echarts.init(document.getElementById('hvac'), building_theme);
+                var hvacSeries = [];
+                var names = [];
+
+                var floor=['F_1', 'F_2', 'F_3'];
+                var haz_name=[" F_1_Z_8A: Hazium Concentration", " F_2_Z_2: Hazium Concentration", " F_2_Z_4: Hazium Concentration", " F_3_Z_1: Hazium Concentration"];
+
+                for (var i in sensor) {
+                    //special case: 只分层不分zone
+                    if(sensor[i].indexOf('Air Mass Flow Rate') != -1 || sensor[i].indexOf('COOLING COIL Power') != -1 || sensor[i].indexOf('HEATING COIL Power') != -1 || sensor[i].indexOf('FAN OUTLET Mass Flow Rate') != -1){
+                        for(var f in floor){
+                            var name=floor[f]+sensor[i];
+                            names.push(name);
+                            var tempObj = {
+                                name: name,
+                                type: 'line',
+                                data: data[name]
+                            };
+                            hvacSeries.push(tempObj);
+                        }
+                    }
+                    //special case: haz
+                    else if(sensor[i].indexOf('haz')!=-1){
+                        for (var i=0;i<4;i++){
+                            names.push(haz_name[i]);
+                            var tempObj = {
+                                name: haz_name[i],
+                                type: 'line',
+                                data: data2[haz_name[i]],
+                            };
+                            hvacSeries.push(tempObj);
+                        }
+                    }
+                    else {
+                        for (var j in checked_zone) {
+                            var name = checked_zone[j] + sensor[i];
+                            console.log(name);
+                            names.push(name);
+                            var tempObj = {
+                                name: name,
+                                type: 'line',
+                                data: data[name]
+                            };
+                            hvacSeries.push(tempObj);
+                        }
+                    }
+                }
+                HVAC.setOption(getOption(x_axis, hvacSeries, names));
+            });
+        });
+    }
+</script>
+
+<script src="js/shine.js"></script>
+</body>
+</html>
