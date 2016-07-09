@@ -49,13 +49,13 @@
 <div style="height: 50px;"></div>
 <div class="container" style="position:relative; top:20px;width: 90%;">
     <div class="row">
-        <div class="panel panel-default col-md-4" style="height:700px;">
+        <div class="panel panel-default col-md-4" style="height:1200px;">
         <div class="panel-heading"><h4>HVAC Filter</h4></div>
         <div class="panel-body">
             <div id="filter" class="col-md-12" >
-                <!--<div class="checkbox" id="floor">-->
-                    <!--<b>Floor: </b><label><input type="checkbox" id="f1" value=""> Floor 1 </label> <label><input type="checkbox" id="f2" value=""> Floor 2 </label> <label><input type="checkbox" id="f3" value=""> Floor 3 </label>-->
-                <!--</div><br>-->
+                <div class="checkbox">
+                    <b>Select All On:  </b><label><input id="floor1" type="checkbox" value="1"> Floor1 </label> <label><input id="floor2" type="checkbox" value="2"> Floor2 </label> <label><input id="floor3" type="checkbox" value="3"> Floor3 </label>
+                </div>
                 <div class="checkbox" id="floor1_zone">
                     <b>Floor 1 Zone: </b><label><input type="checkbox" value="1"> 1 </label> <label><input type="checkbox" value="2"> 2 </label> <label><input type="checkbox" value="3"> 3 </label> <label><input type="checkbox" value="4"> 4 </label>
                       <label><input type="checkbox" value="5"> 5 </label> <label><input type="checkbox" value="6"> 6 </label> <label><input type="checkbox" value="7"> 7 </label> <label><input type="checkbox" value="8A"> 8A </label> <label><input type="checkbox" value="8B"> 8B </label>
@@ -69,8 +69,9 @@
                 <div class="checkbox" id="floor3_zone">
                     <b>Floor 3 Zone: </b> <label><input type="checkbox" value="1"> 1 </label> <label><input type="checkbox" value="2"> 2 </label> <label><input type="checkbox" value="3"> 3 </label>
                     <label><input type="checkbox" value="5"> 5 </label> <label><input type="checkbox" value="6"> 6 </label> <label><input type="checkbox" value="7"> 7 </label> <label><input type="checkbox" value="8"> 8 </label> <label><input type="checkbox" value="9"> 9 </label>
-                    <label><input type="checkbox" value="10"> 10 </label> <label><input type="checkbox" value="11A"> 11A </label> <label><input type="checkbox" value="11B"> 11B </label> <label><input type="checkbox" value="11C"> 11C </label>
+                    <label><input type="checkbox" value="10"> 10 </label> <label><input type="checkbox" value="11A"> 11A </label> <label><input type="checkbox" value="11B"> 11B </label> <label><input type="checkbox" value="11C"> 11C </label> <label><input type="checkbox" value="12"> 12 </label>
                 </div><br>
+
 
                 <div id="building">
                     <div class="checkbox">
@@ -86,13 +87,58 @@
                     <b>Harmful Gas: </b><label><input type="checkbox" value=" RETURN OUTLET CO2 Concentration"> CO2 </label> <label><input type="checkbox" value="haz"> Haz </label>
                 </div><br>
                     </div>
-                <button type="button" class="btn btn-default" onclick="drawHVAC()">Plot</button>
+
+                <!--timeButton-->
+                <div class="dropdown" id="start">
+                    <b>Start Date: </b><button id="start_bt" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Please Select
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" id="start_date">
+                        <li><a href="#">May31.</a></li>
+                        <li><a href="#">June 1</a></li>
+                        <li><a href="#">June 2</a></li>
+                        <li><a href="#">June 3</a></li>
+                        <li><a href="#">June 4</a></li>
+                        <li><a href="#">June 5</a></li>
+                        <li><a href="#">June 6</a></li>
+                        <li><a href="#">June 7</a></li>
+                        <li><a href="#">June 8</a></li>
+                        <li><a href="#">June 9</a></li>
+                        <li><a href="#">June 10</a></li>
+                        <li><a href="#">June 11</a></li>
+                        <li><a href="#">June 12</a></li>
+                        <li><a href="#">June 13</a></li>
+                    </ul>
+                </div><br>
+                <div class="dropdown" id="end">
+                    <b>End Date: </b><button id="end_bt" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Please Select
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu" id="end_date">
+                        <li><a href="#">May31.</a></li>
+                        <li><a href="#">June 1</a></li>
+                        <li><a href="#">June 2</a></li>
+                        <li><a href="#">June 3</a></li>
+                        <li><a href="#">June 4</a></li>
+                        <li><a href="#">June 5</a></li>
+                        <li><a href="#">June 6</a></li>
+                        <li><a href="#">June 7</a></li>
+                        <li><a href="#">June 8</a></li>
+                        <li><a href="#">June 9</a></li>
+                        <li><a href="#">June 10</a></li>
+                        <li><a href="#">June 11</a></li>
+                        <li><a href="#">June 12</a></li>
+                        <li><a href="#">June 13</a></li>
+                    </ul>
+                </div>
+                <br>
+
+                <button type="button" class="btn btn-success" onclick="drawHVAC()">Plot</button>
+                <button type="button" class="btn btn-info" onclick="clearAll()">Clear All</button>
             </div>
         </div>
     </div>
 
     <div>
-        <div class="panel panel-default col-md-8" style="height:700px;">
+        <div class="panel panel-default col-md-8" style="height:1200px;">
         <div class="panel-heading"><h4>Building Data</h4></div>
         <div class="panel-body">
             <div id="hvac" class="col-md-12" style="width: 100%; height:550px;">
@@ -104,9 +150,46 @@
 </div>
 
 <script type="text/javascript">
+    //get the time selector
+    var start_date='';
+    var end_date='';
+    $('a').on("click", function(){
+        console.log($(this).text());
+        if($(this).closest('div').attr('id')=='start'){
+            $('#start_bt').text($(this).text());
+            start_date=($(this).text())[5];
+        }
+        else{
+            $('#end_bt').text($(this).text());
+            end_date=($(this).text())[5];
+        }
+        console.log(start_date);
+        console.log(end_date);
+    });
+
+    //zone selector
+    var checked_zone=[];
+    var sensor=[];
+    $('#floor1').change(function(){
+        $("#floor1_zone input:checkbox").prop('checked', $(this).prop("checked"));
+    });
+    $('#floor2').change(function(){
+        $("#floor2_zone input:checkbox").prop('checked', $(this).prop("checked"));
+    });
+    $('#floor3').change(function(){
+        $("#floor3_zone input:checkbox").prop('checked', $(this).prop("checked"));
+    });
+
+
+    function clearAll(){
+        $('input:checked').attr('checked', false);
+        checked_zone=[];
+        sensor=[];
+        drawHVAC();
+    }
+
     function drawHVAC(){
         //get the checked zone
-        var checked_zone=[];
         $('#floor1_zone input:checked').each(function(){
             checked_zone.push("F_1_Z_"+$(this).val());
         });
@@ -119,7 +202,6 @@
         console.log(checked_zone);
 
         //get the sensor
-        var sensor=[];
         $('#building input:checked').each(function(){
             sensor.push($(this).val());
         });
@@ -131,11 +213,12 @@
                 tooltip: {
                     trigger: 'axis',
                     position: function (pt) {
-                        return [pt[0], '10%'];
+                        return [pt[0], '50%'];
                     }
                 },
                 legend: {
-                    data:legend
+                    data:legend,
+                    z:3
                 },
                 toolbox: {
                     show: true,
@@ -153,7 +236,7 @@
                     data: x_axis
                 },
                 yAxis: {
-                    type: 'value'
+                    type: 'value',
                     //boundaryGap: [0, '100%']
                     //max: 100
                 },
@@ -162,26 +245,26 @@
                         type: 'slider',
                         show: true,
                         xAxisIndex: [0],
-                        start: 0,
+                        start: 30,
                         end: 100
                     },
                     {
                         type: 'slider',
                         show: true,
                         yAxisIndex: [0],
-                        start: 0,
+                        start: 30,
                         end: 100
                     },
                     {
                         type: 'inside',
                         xAxisIndex: [0],
-                        start: 0,
+                        start: 30,
                         end: 100
                     },
                     {
                         type: 'inside',
                         yAxisIndex: [0],
-                        start: 0,
+                        start: 30,
                         end: 100
                     }
                 ],
